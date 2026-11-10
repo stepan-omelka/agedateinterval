@@ -1,0 +1,79 @@
+:host {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 1.5rem;
+  border: 1px solid var(--pink-100);
+  border-radius: 1rem;
+  background: linear-gradient(to right, var(--pink-50), var(--purple-50));
+  text-align: center;
+
+  // The soft blob in the top-right corner
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background: var(--pink-100);
+    opacity: 0.5;
+    filter: blur(24px);
+  }
+}
+
+.eyebrow {
+  position: relative;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink-700);
+}
+
+.bounds {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  // The dash between the two numbers, placed between them with `order`.
+  &::before {
+    content: '';
+    order: 1;
+    width: 2rem;
+    height: 1px;
+    background: var(--slate-300);
+  }
+}
+
+.bound {
+  display: flex;
+  flex-direction: column-reverse;
+
+  &:last-child {
+    order: 2;
+  }
+
+  dd {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--slate-800);
+  }
+
+  dt {
+    font-size: 0.75rem;
+    color: var(--slate-500);
+  }
+}
+
+.note {
+  position: relative;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--slate-500);
+}

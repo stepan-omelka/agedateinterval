@@ -1,47 +1,43 @@
 {
   "name": "agedate",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
-  },
   "private": true,
-  "packageManager": "npm@11.4.2",
-  "dependencies": {
-    "@angular/common": "^21.0.0",
-    "@angular/compiler": "^21.0.0",
-    "@angular/core": "^21.0.0",
-    "@angular/forms": "^21.0.0",
-    "@angular/platform-browser": "^21.0.0",
-    "@angular/router": "^21.0.0",
-    "firebase": "^12.8.0",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+  "description": "Agedate: Angular frontend (web/) + Next.js API (api/), sharing the dating-range rule (shared/)",
+  "scripts": {
+    "prepare": "husky",
+    "postinstall": "npm --prefix api install && npm --prefix web install",
+    "dev": "concurrently --kill-others-on-fail -n api,web -c gray,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm --prefix api run dev",
+    "dev:web": "npm --prefix web start",
+    "build": "npm --prefix api run build:site",
+    "start": "npm --prefix api start",
+    "lint": "npm --prefix api run lint && npm --prefix web run lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm --prefix api test && npm --prefix web test -- --watch=false",
+    "commit": "cz"
   },
   "devDependencies": {
-    "@angular/build": "^21.0.4",
-    "@angular/cli": "^21.0.4",
-    "@angular/compiler-cli": "^21.0.0",
-    "@tailwindcss/postcss": "^4.1.12",
-    "jsdom": "^27.1.0",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.12",
-    "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@commitlint/cz-commitlint": "^21.2.4",
+    "@commitlint/types": "^21.2.3",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "commitizen": "^4.3.2",
+    "concurrently": "^9.2.5",
+    "husky": "^9.1.7",
+    "inquirer": "^12.11.1",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.8.1"
+  },
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
   }
 }

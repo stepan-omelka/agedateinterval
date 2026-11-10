@@ -1,0 +1,58 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: 0.75rem;
+  // Darker than the page background, so the white label passes WCAG AA contrast.
+  background: linear-gradient(to right, var(--pink-600), var(--rose-600));
+  box-shadow: 0 10px 15px -3px rgb(219 39 119 / 0.3);
+  font: inherit;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 10px 20px -3px rgb(219 39 119 / 0.45);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--pink-600);
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.75;
+    cursor: progress;
+  }
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.status {
+  min-height: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--slate-600);
+}

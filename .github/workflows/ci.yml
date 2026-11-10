@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v7
+      - name: Install dependencies
+        uses: ./.github/actions/install
+      - name: Lint the API (ESLint, eslint-config-next) and the web app (angular-eslint)
+        run: npm run lint
+
+  format:
+    runs-on: ubuntu-latest
+    name: Formatting
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v7
+      - name: Install dependencies
+        uses: ./.github/actions/install
+      - name: Check formatting (Prettier)
+        run: npm run format:check
+
+  test:
+    runs-on: ubuntu-latest
+    name: Tests
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v7
+      - name: Install dependencies
+        uses: ./.github/actions/install
+      - name: Test the rule, the API and the web app (Vitest)
+        run: npm test
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v7
+      - name: Install dependencies
+        uses: ./.github/actions/install
+      - name: Build the Angular app into the Next.js app (as Vercel does)
+        run: npm run build

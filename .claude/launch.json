@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "agedate-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 4400
+    },
+    {
+      "name": "agedate-prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 3400
+    }
+  ]
+}
