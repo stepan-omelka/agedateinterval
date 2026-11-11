@@ -39,5 +39,10 @@
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
+  },
+  "overrides": {
+    "@trivago/prettier-plugin-sort-imports": {
+      "minimatch": "^11.0.8"
+    }
   }
 }

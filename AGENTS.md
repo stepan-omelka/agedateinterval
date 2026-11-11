@@ -56,6 +56,12 @@ commit message that doesn't follow it.
   `package.json` and `package-lock.json`, and the root `postinstall` installs the other two. Add a
   dependency with `npm install <package> --prefix <project>`. Vercel installs only `api/` and
   `web/` (`api/vercel.json`), so a root dependency never reaches a production build.
+- **The root `package.json` overrides `minimatch`** for `@trivago/prettier-plugin-sort-imports`,
+  whose newest release still asks for minimatch 9, which has a denial-of-service advisory
+  ([GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249), fixed in 11.0.1). The
+  plugin only calls `minimatch()`, which 11 keeps. Drop the override once the plugin asks for 11.
+  Don't add the same override for ESLint in `api/` or `web/`: minimatch 11 changed the partial
+  matching ESLint uses to find files, so it could lint or skip the wrong ones without an error.
 - **The production address is written out in [`web/src/index.html`](./web/src/index.html)**: link
   previews need absolute URLs (`og:url`, `og:image`, the canonical link). A custom domain means
   changing them there.
