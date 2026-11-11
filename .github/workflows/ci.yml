@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+# CI only reads the code; it never pushes, comments or deploys.
+permissions:
+  contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-latest
