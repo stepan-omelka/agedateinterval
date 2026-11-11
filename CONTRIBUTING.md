@@ -75,7 +75,7 @@ diff). For example:
 - `feat(web): show the range as you type`
 - `fix(api): reject ages with leading zeros`
 - `fix(shared,web): round the minimum up above 25`
-- `test(web): cover a cancelled share sheet`
+- `test(web): cover a canceled share sheet`
 - `docs(api): describe the image cache`
 - `ci: run the build on pull requests`
 - `build: update Angular to 22.3`

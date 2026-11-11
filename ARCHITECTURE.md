@@ -16,7 +16,7 @@ graph LR
 
   subgraph vercel["Vercel: one Next.js app (api)"]
     STATIC["public/<br/>the web build"]
-    STORY["GET /api/story/:age<br/>route handler + next/og"]
+    STORY["GET /api/story/:age<br/>route handler + next/og,<br/>drawn at build time"]
   end
 
   SHARED["shared<br/>dating-range.ts"]
@@ -30,11 +30,12 @@ graph LR
   STORY -.->|imports| SHARED
 ```
 
-- **The rule runs in two places.** The browser computes the range on every keystroke; the server
-  computes it again to draw the image. Both import [`shared`](./shared/README.md), so the numbers on
+- **The rule runs in two places.** The browser computes the range once typing pauses; the build
+  computes it again to draw the images. Both import [`shared`](./shared/README.md), so the numbers on
   screen and in the image cannot disagree.
-- **The image is a pure function of the age and the host name**, so the CDN caches each one and the
-  function renders it once per deployment.
+- **Every story image is drawn at build time**: only ages 14 to 120 have a range, so the build
+  renders all 107 and the CDN serves them as static files. A function runs only to turn away an
+  invalid age.
 - **In development there are two origins**: the Angular dev server (port 4400) proxies `/api/*` to
   `next dev` (port 3400), so the browser still talks to one.
 
@@ -87,5 +88,5 @@ naming. The tool is [Vitest](https://vitest.dev), with jsdom for the Angular tes
 
 Vercel builds from the Root Directory `api`, with the install and build commands in
 [`api/vercel.json`](./api/vercel.json): it installs `api/` and `web/`, builds Angular, copies it into
-`api/public/` and builds Next.js. CI runs lint, formatting, tests and the same build; it does not
-deploy.
+`api/public/` and builds Next.js, which draws the images. Functions run in Frankfurt (`fra1`). CI
+runs lint, formatting, tests and the same build; it does not deploy.

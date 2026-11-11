@@ -34,9 +34,10 @@ npm run format:check  # Prettier, including import order
 ```
 
 - **`npm run build` is the only check of the production wiring**: the Angular build copied into
-  `api/public/`, the rewrite of `/`, the function's file tracing. Run it after touching
-  `api/next.config.ts`, `api/vercel.json`, `api/scripts/` or `api/assets/`, and check the result
-  in a browser with `npm start` (one origin, http://localhost:3400) rather than the dev servers.
+  `api/public/`, the rewrite of `/`, the images drawn at build time and Angular's script policy.
+  Run it after touching `api/next.config.ts`, `api/vercel.json`, `api/scripts/`, `api/assets/` or
+  `web/src/index.html`, and check the result in a browser with `npm start` (one origin,
+  http://localhost:3400) rather than the dev servers.
 - Comments describe the code as it stands, never how it used to look: no "was X, now Y", no "moved
   from Z". **The git history is the record.** The one exception is code that looks wrong but is
   right; there, say what breaks if it is changed back.
@@ -55,6 +56,9 @@ commit message that doesn't follow it.
   `package.json` and `package-lock.json`, and the root `postinstall` installs the other two. Add a
   dependency with `npm install <package> --prefix <project>`. Vercel installs only `api/` and
   `web/` (`api/vercel.json`), so a root dependency never reaches a production build.
+- **The production address is written out in [`web/src/index.html`](./web/src/index.html)**: link
+  previews need absolute URLs (`og:url`, `og:image`, the canonical link). A custom domain means
+  changing them there.
 - **Hosting must stay free.** This is a personal project on Vercel's Hobby plan, which is for
   non-commercial use, needs no card and pauses instead of billing. Don't add a service, an add-on
   or a Vercel feature that needs a payment method.

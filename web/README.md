@@ -13,10 +13,13 @@ of its own.
   from the form (`empty`, `invalid`, `too-young`, `range`) with `computed()`, and the template
   switches on its `kind`. A new state is a new member of the union, not a new boolean.
 - **The age field is a Signal Forms field** (`form()` + `[formField]`). Its validators carry the
-  messages shown under the input. The model is `number | null` because Signal Forms maps an empty
-  number input to `null`.
+  error messages. The model is `number | null` because Signal Forms maps an empty number input to
+  `null`. `debounce()` holds each keystroke back 300 ms (or until the field loses focus), so a
+  half-typed "2" of "25" never shows as too young.
 - **`[formField]` sets no ARIA attributes.** The template binds `aria-invalid` and
   `aria-describedby` from `result()`; keep them in step with the error message.
+- **One live region holds every result**, the error message included. It is always on the page,
+  because screen readers announce changes reliably only in a live region that existed before.
 - **Components**: [`RangeCard`](./src/app/range-card/range-card.ts) is presentational (one input);
   [`ShareButton`](./src/app/share-button/share-button.ts) loads and shares the image through the
   [`StoryShare`](./src/app/share-button/story-share.ts) service.
@@ -30,15 +33,25 @@ of its own.
   `ShareButton` preloads the image with `httpResource.blob()` as soon as a range is on screen, keeps
   the button disabled until it has loaded, and calls `StoryShare.share()` first thing in the click
   handler.
-- **Closing the share sheet is not an error** (`AbortError` → `'cancelled'`). A `NotAllowedError`,
+- **One button for every state** (loading, retry, share), disabled with `aria-disabled` rather than
+  `disabled`: a `disabled` button drops keyboard focus to the page. A tap while the sheet is open is
+  ignored, because a second `navigator.share()` call rejects.
+- **Closing the share sheet is not an error** (`AbortError` → `'canceled'`). A `NotAllowedError`,
   and a browser without a share sheet, fall back to downloading the PNG.
 
 ## 🎨 Styling
 
 - **SCSS, one file per component.** The colors are CSS custom properties in
-  [`src/styles.scss`](./src/styles.scss); components use them, never literals.
-- **Contrast**: small text uses the 500+ shades on white, and white text sits only on the 600
-  gradient (the share button). The page gradient is too light for text.
+  [`src/styles.scss`](./src/styles.scss); components use them for every hue (`color-mix()` for a
+  transparent one). Plain white and black shadows are the only literals.
+- **Contrast**: small text uses the 600+ shades, because the cards are tinted and the 500s fall just
+  short of 4.5:1 there. White text sits only on the 600 gradient (the share button). The page
+  gradient is too light for text.
+- **Security**: the production build writes a hash-based Content Security Policy into `index.html`
+  (`security.autoCsp` in `angular.json`), so an inline `<script>` added to `index.html` gets a hash
+  automatically, and a script added any other way is blocked.
+- **Link previews**: `src/index.html` has the Open Graph tags, with absolute URLs to the production
+  site. The preview image and the home-screen icon are drawn by the [API](../api/README.md).
 - `.fade-in` in `styles.scss` is the class for `animate.enter`, and `prefers-reduced-motion` switches
   every animation off.
 - `angular.json` budgets component styles at 4 kB (warning) and 8 kB (error).

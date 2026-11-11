@@ -21,8 +21,8 @@ it; both import this file through the `@shared/*` alias, so the numbers cannot d
 - **`MIN_AGE` and `MAX_AGE` are the single source** for the limits. The web app's messages and the
   API's error text interpolate them, so code never writes 14 or 120 as a literal. Tests do, on
   purpose: an expected value is spelled out.
-- **A rule change reaches the image only after a deployment**, because the CDN caches each age's
-  image until the next one.
+- **A rule change reaches the images only after a deployment**, because they are drawn at build
+  time.
 
 ## 💻 Development
 

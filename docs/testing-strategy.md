@@ -5,7 +5,7 @@
 - **Test coverage over code coverage.** Ask which scenario is untested, not which line is unvisited.
 - **Black-box over white-box.** Test through a module's public interface (a function's arguments, a
   route's request, a component's DOM), so a refactor that keeps the contract keeps the tests green.
-- **A test reads as documentation.** The name states the behaviour; the body shows how the unit is
+- **A test reads as documentation.** The name states the behavior; the body shows how the unit is
   meant to be used. Start with the expected usage, end with edge cases.
 - **DAMP over DRY.** Repetition inside a test is cheaper than indirection. No conditions or loops in
   a test body (`it.each` is fine).

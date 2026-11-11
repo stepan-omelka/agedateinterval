@@ -26,7 +26,7 @@ prefer a test that catches the wrong change; otherwise put it where that reader 
 | what every change to a project needs                    | that project's `README.md`   |
 | what every change in the repo needs                     | `CONTRIBUTING.md` or `docs/` |
 | a conclusion scattered across several files             | the nearest `AGENTS.md`      |
-| behaviour a test can check                              | the test                     |
+| behavior a test can check                               | the test                     |
 | anything with a home of its own (a file, a tool's docs) | that home; link it           |
 | what the code does, or a narration of its steps         | nowhere; the code says it    |
 | history ("ported from …", "was X, now Y")               | the commit message           |
@@ -34,13 +34,13 @@ prefer a test that catches the wrong change; otherwise put it where that reader 
 
 ## 💬 Comments
 
-| A comment for…                          | must include…                                 |
-| :-------------------------------------- | :-------------------------------------------- |
-| a workaround for a browser or tool bug  | a link to the upstream issue, if there is one |
-| version- or platform-specific behaviour | the version or platform it depends on         |
-| a non-obvious failure mode              | what triggers it                              |
-| an invisible constraint                 | the source the value must stay in sync with   |
-| code that looks wrong but is right      | what breaks if it is "fixed"                  |
+| A comment for…                         | must include…                                 |
+| :------------------------------------- | :-------------------------------------------- |
+| a workaround for a browser or tool bug | a link to the upstream issue, if there is one |
+| version- or platform-specific behavior | the version or platform it depends on         |
+| a non-obvious failure mode             | what triggers it                              |
+| an invisible constraint                | the source the value must stay in sync with   |
+| code that looks wrong but is right     | what breaks if it is "fixed"                  |
 
 Keep a comment, JSDoc included, to about two lines. State the constraint, not the story.
 
@@ -56,7 +56,7 @@ such change needs: what the project is, how it is wired, and the rules and footg
 contributor must know.
 
 - **No section for one component or one feature.** It matters only to whoever changes it, so its
-  constraints go in comments and its behaviour in tests. A footgun that bites every change to the
+  constraints go in comments and its behavior in tests. A footgun that bites every change to the
   project (such as the share sheet's user activation in `web`) is the exception.
 - It **ends with `💻 Development` and `🧪 Testing`**, in that order. They hold only what is specific
   to the project and link [`CONTRIBUTING.md`](../CONTRIBUTING.md) and
