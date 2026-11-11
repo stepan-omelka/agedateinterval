@@ -11,6 +11,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ec4899" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- Link previews in chats and on social networks. They need absolute URLs, so these
+         name the production site; og-image.png is drawn by the API (api/src/app/og-image.png). -->
+    <link rel="canonical" href="https://agedate.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Agedate" />
+    <meta property="og:url" content="https://agedate.vercel.app/" />
+    <meta property="og:title" content="Agedate: what age is it OK to date?" />
+    <meta
+      property="og:description"
+      content="Enter your age to see your dating range by the half-your-age-plus-seven rule, and share it on your story."
+    />
+    <meta property="og:image" content="https://agedate.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Agedate: what age is it OK to date? Half your age plus seven."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <app-root></app-root>
