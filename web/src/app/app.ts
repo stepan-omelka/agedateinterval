@@ -1,5 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
-import { FormField, form, max, min, validate } from '@angular/forms/signals';
+import { FormField, debounce, form, max, min, validate } from '@angular/forms/signals';
 import { type DatingRange, MAX_AGE, MIN_AGE, datingRange } from '@shared/dating-range';
 import { RangeCard } from './range-card/range-card';
 import { ShareButton } from './share-button/share-button';
@@ -22,6 +22,9 @@ export class App {
   private readonly model = signal<{ age: number | null }>({ age: null });
 
   protected readonly ageForm = form(this.model, path => {
+    // Wait for typing to pause (or the field to lose focus): while "25" is typed, the "2" alone
+    // would flash "Too young to date!" and a screen reader would announce it.
+    debounce(path.age, 300);
     min(path.age, 1, { message: `Enter an age from 1 to ${MAX_AGE}.` });
     max(path.age, MAX_AGE, { message: `Max age is ${MAX_AGE}! 🧛` });
     validate(path.age, ({ value }) => {

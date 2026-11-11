@@ -32,13 +32,14 @@
             />
           </svg>
         </div>
-        @if (current.kind === 'invalid') {
-          <p id="age-error" class="error">{{ current.message }}</p>
-        }
       </div>
 
-      <div class="results" aria-live="polite">
-        @if (current.kind === 'range') {
+      <!-- Always on the page and holding every state, the error too: screen readers only
+           reliably announce changes inside a live region that was there before the change. -->
+      <div class="results" aria-live="polite" aria-atomic="true">
+        @if (current.kind === 'invalid') {
+          <p id="age-error" class="error">{{ current.message }}</p>
+        } @else if (current.kind === 'range') {
           <app-range-card animate.enter="fade-in" [range]="current.range" />
         } @else if (current.kind === 'too-young') {
           <div class="too-young" animate.enter="fade-in">

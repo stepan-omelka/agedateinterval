@@ -79,7 +79,7 @@
   transition: border-color 0.3s;
 
   &::placeholder {
-    color: var(--slate-300);
+    color: var(--placeholder);
   }
 
   &:focus {
@@ -89,6 +89,11 @@
 
   &[aria-invalid='true'] {
     border-bottom-color: var(--rose-600);
+
+    // The red line replaces the pink focus color, so focus thickens the line instead.
+    &:focus {
+      box-shadow: 0 3px 0 var(--rose-600);
+    }
   }
 
   &::-webkit-inner-spin-button,
@@ -118,11 +123,7 @@
   font-size: 0.875rem;
   font-weight: 700;
   text-align: center;
-  color: var(--rose-600);
-}
-
-.results:empty {
-  display: none;
+  color: var(--rose-700);
 }
 
 .too-young {
@@ -151,5 +152,5 @@
   padding: 1rem 0;
   font-size: 0.875rem;
   text-align: center;
-  color: var(--slate-500);
+  color: var(--slate-600);
 }
