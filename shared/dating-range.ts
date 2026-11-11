@@ -18,7 +18,7 @@ export type DatingRange = {
 
 /** Whether `value` is an age the app accepts: a whole number from 1 to {@link MAX_AGE}. */
 export function isAge(value: unknown): value is number {
-  return Number.isInteger(value) && (value as number) >= 1 && (value as number) <= MAX_AGE;
+  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= MAX_AGE;
 }
 
 /**
