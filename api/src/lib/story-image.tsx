@@ -1,18 +1,8 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import type { DatingRange } from '@shared/dating-range';
+import { BRAND_GRADIENT } from './brand';
 
 /** Instagram and Facebook stories are 9:16. */
 export const STORY_SIZE = { width: 1080, height: 1920 } as const;
-
-const font = (file: string) => readFile(join(process.cwd(), 'assets/fonts', file));
-
-/** Inter (SIL Open Font License, see assets/fonts/OFL.txt), loaded once per server instance. */
-export const storyFonts = Promise.all([
-  font('inter-500.woff').then(data => ({ name: 'Inter', data, weight: 500 as const })),
-  font('inter-700.woff').then(data => ({ name: 'Inter', data, weight: 700 as const })),
-  font('inter-900.woff').then(data => ({ name: 'Inter', data, weight: 900 as const })),
-]);
 
 const colors = {
   accent: '#db2777',
@@ -42,7 +32,7 @@ export function StoryImage({ range, host }: StoryImageProps) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: 'linear-gradient(160deg, #ec4899 0%, #8b5cf6 100%)',
+        backgroundImage: BRAND_GRADIENT,
         fontFamily: 'Inter',
       }}
     >
