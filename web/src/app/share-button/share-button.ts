@@ -1,5 +1,5 @@
 import { httpResource } from '@angular/common/http';
-import { Component, inject, input, linkedSignal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
 import { StoryShare } from './story-share';
 
 @Component({
@@ -21,11 +21,32 @@ export class ShareButton {
   /** Feedback after a click, cleared whenever the age changes. */
   protected readonly status = linkedSignal({ source: this.age, computation: () => '' });
 
-  protected async share(): Promise<void> {
-    const image = this.image.value();
-    if (!image) {
+  /** While the share sheet is open, a second tap must not try to open another one. */
+  private readonly sharing = signal(false);
+
+  /** What the one button does. It stays the same element, so it keeps keyboard focus. */
+  protected readonly state = computed(() =>
+    this.image.isLoading() ? 'loading' : this.image.error() ? 'failed' : 'ready',
+  );
+
+  protected readonly busy = computed(() => this.state() === 'loading' || this.sharing());
+
+  protected onClick(): void {
+    if (this.busy()) {
       return;
     }
+    if (this.state() === 'failed') {
+      this.image.reload();
+      return;
+    }
+    const image = this.image.value();
+    if (image) {
+      void this.share(image);
+    }
+  }
+
+  private async share(image: Blob): Promise<void> {
+    this.sharing.set(true);
     try {
       // Nothing may be awaited before this call: it opens the share sheet (see StoryShare).
       const outcome = await this.storyShare.share(image, `agedate-${this.age()}.png`);
@@ -33,6 +54,8 @@ export class ShareButton {
     } catch (error) {
       console.error(error);
       this.status.set("Couldn't share the image. Try again.");
+    } finally {
+      this.sharing.set(false);
     }
   }
 }

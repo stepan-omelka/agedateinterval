@@ -15,7 +15,7 @@
   border-radius: 0.75rem;
   // Darker than the page background, so the white label passes WCAG AA contrast.
   background: linear-gradient(to right, var(--pink-600), var(--rose-600));
-  box-shadow: 0 10px 15px -3px rgb(219 39 119 / 0.3);
+  box-shadow: 0 10px 15px -3px color-mix(in srgb, var(--pink-600) 30%, transparent);
   font: inherit;
   font-weight: 700;
   color: white;
@@ -25,11 +25,11 @@
     box-shadow 0.2s,
     opacity 0.2s;
 
-  &:hover:not(:disabled) {
-    box-shadow: 0 10px 20px -3px rgb(219 39 119 / 0.45);
+  &:hover:not([aria-disabled='true']) {
+    box-shadow: 0 10px 20px -3px color-mix(in srgb, var(--pink-600) 45%, transparent);
   }
 
-  &:active:not(:disabled) {
+  &:active:not([aria-disabled='true']) {
     transform: scale(0.97);
   }
 
@@ -38,7 +38,7 @@
     outline-offset: 3px;
   }
 
-  &:disabled {
+  &[aria-disabled='true'] {
     opacity: 0.75;
     cursor: progress;
   }

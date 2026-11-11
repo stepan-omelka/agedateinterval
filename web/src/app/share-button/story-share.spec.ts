@@ -45,7 +45,7 @@ describe('StoryShare', () => {
   it('does nothing more when the share sheet is closed', async () => {
     stubWebShare(() => Promise.reject(new DOMException('Cancelled', 'AbortError')));
 
-    expect(await storyShare.share(image, 'agedate-25.png')).toBe('cancelled');
+    expect(await storyShare.share(image, 'agedate-25.png')).toBe('canceled');
     expect(click).not.toHaveBeenCalled();
   });
 

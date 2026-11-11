@@ -30,6 +30,7 @@ describe('ShareButton', () => {
   afterEach(() => http.verify());
 
   const button = () => fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+  const isDisabled = () => button().getAttribute('aria-disabled') === 'true';
   const status = () => fixture.nativeElement.querySelector('[role=status]').textContent.trim();
 
   async function loadImage(url = '/api/story/25'): Promise<void> {
@@ -46,12 +47,14 @@ describe('ShareButton', () => {
   }
 
   it('preloads the image and waits for it before sharing', async () => {
-    expect(button().disabled).toBe(true);
+    expect(isDisabled()).toBe(true);
     expect(button().textContent).toContain('Painting pixels');
+    button().click();
+    expect(share).not.toHaveBeenCalled();
 
     await loadImage();
 
-    expect(button().disabled).toBe(false);
+    expect(isDisabled()).toBe(false);
     expect(button().textContent).toContain('Share on your story');
   });
 
@@ -61,6 +64,22 @@ describe('ShareButton', () => {
 
     expect(share).toHaveBeenCalledWith(image, 'agedate-25.png');
     expect(status()).toBe('');
+  });
+
+  it('ignores a second tap while the share sheet is open', async () => {
+    await loadImage();
+    let closeSheet: (outcome: ShareOutcome) => void = () => undefined;
+    share.mockReturnValue(new Promise(resolve => (closeSheet = resolve)));
+
+    button().click();
+    TestBed.tick();
+    button().click();
+    closeSheet('shared');
+    await fixture.whenStable();
+
+    expect(share).toHaveBeenCalledTimes(1);
+    expect(status()).toBe('');
+    expect(isDisabled()).toBe(false);
   });
 
   it('says when the image was downloaded instead, until the age changes', async () => {
@@ -82,14 +101,20 @@ describe('ShareButton', () => {
     expect(status()).toBe("Couldn't share the image. Try again.");
   });
 
-  it('offers a retry when the image fails to load', async () => {
+  it('offers a retry when the image fails to load, on the same focused button', async () => {
     http.expectOne('/api/story/25').flush(null, { status: 500, statusText: 'Server Error' });
     await fixture.whenStable();
-    expect(button().textContent).toContain('Try again');
+    const retry = button();
+    expect(retry.textContent).toContain('Try again');
 
-    button().click();
+    retry.click();
+    TestBed.tick();
+    expect(button()).toBe(retry);
+    expect(retry.textContent).toContain('Painting pixels');
+    expect(isDisabled()).toBe(true);
+
     await loadImage();
-
-    expect(button().textContent).toContain('Share on your story');
+    expect(button()).toBe(retry);
+    expect(retry.textContent).toContain('Share on your story');
   });
 });

@@ -1,6 +1,6 @@
 import { DOCUMENT, Service, inject } from '@angular/core';
 
-export type ShareOutcome = 'shared' | 'cancelled' | 'downloaded';
+export type ShareOutcome = 'shared' | 'canceled' | 'downloaded';
 
 /**
  * Hands the story image to the system share sheet where the browser has one (phones,
@@ -24,7 +24,7 @@ export class StoryShare {
         return 'shared';
       } catch (error) {
         if (isDomError(error, 'AbortError')) {
-          return 'cancelled';
+          return 'canceled';
         }
         // NotAllowedError: the browser refused to open the sheet, so download instead.
         if (!isDomError(error, 'NotAllowedError')) {
