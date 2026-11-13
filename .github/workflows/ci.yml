@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v7
       - name: Install dependencies
         uses: ./.github/actions/install
-      - name: Lint the API (ESLint, eslint-config-next) and the web app (angular-eslint)
+      - name: Lint the API (ESLint, typescript-eslint) and the web app (angular-eslint)
         run: npm run lint
 
   format:
@@ -52,5 +52,5 @@ jobs:
         uses: actions/checkout@v7
       - name: Install dependencies
         uses: ./.github/actions/install
-      - name: Build the Angular app into the Next.js app (as Vercel does)
+      - name: Build the Angular app, the NestJS API and the images (as Vercel does)
         run: npm run build
