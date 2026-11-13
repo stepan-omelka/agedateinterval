@@ -49,6 +49,15 @@ describe('GET /api/story/:age', () => {
     expect((response.body as Buffer).equals(withoutHost)).toBe(false);
   });
 
+  it('leaves the host name out when Vercel gives none', async () => {
+    const withoutHost = (await getStory('25')).body as Buffer;
+    vi.stubEnv('VERCEL_PROJECT_PRODUCTION_URL', '');
+
+    const response = await getStory('25');
+
+    expect((response.body as Buffer).equals(withoutHost)).toBe(true);
+  });
+
   it.each(['13', '121', '0', '025', '25.5', 'abc'])(
     'rejects %s with Problem Details',
     async age => {
