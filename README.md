@@ -6,14 +6,14 @@ What age is it OK to date? Enter your age and Agedate shows your range by the "h
 seven" rule, then turns it into an image for an Instagram or Facebook story.
 
 A full stack portfolio project of [Štěpán Omelka](https://stepan-omelka-portfolio.vercel.app): an
-[Angular](https://angular.dev) frontend and a [Next.js](https://nextjs.org) API in one repo,
-deployed together as one Next.js app on [Vercel](https://vercel.com).
+[Angular](https://angular.dev) frontend and a [NestJS](https://nestjs.com) API in one repo,
+deployed together as one project on [Vercel](https://vercel.com).
 
-| Project                        | What                                                  |
-| :----------------------------- | :---------------------------------------------------- |
-| [`web`](./web/README.md)       | Angular 22 single-page app: the form and the result   |
-| [`api`](./api/README.md)       | Next.js 16 app: renders the story image, serves `web` |
-| [`shared`](./shared/README.md) | The dating-range rule, imported by both               |
+| Project                        | What                                                |
+| :----------------------------- | :-------------------------------------------------- |
+| [`web`](./web/README.md)       | Angular 22 single-page app: the form and the result |
+| [`api`](./api/README.md)       | NestJS 12 app: draws the story image                |
+| [`shared`](./shared/README.md) | The dating-range rule, imported by both             |
 
 ## 🏛️ Architecture
 
@@ -32,4 +32,4 @@ npm run dev   # both dev servers; open http://localhost:4400
 ## 🔤 Credits
 
 The story image uses [Inter](https://rsms.me/inter/) by Rasmus Andersson, under the SIL Open Font
-License ([`api/assets/fonts/OFL.txt`](./api/assets/fonts/OFL.txt)).
+License ([`api/src/image/fonts/OFL.txt`](./api/src/image/fonts/OFL.txt)).

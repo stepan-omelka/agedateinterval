@@ -2,7 +2,7 @@
 
 The "half your age plus seven" rule, in [`dating-range.ts`](./dating-range.ts): Agedate's only
 domain logic. The [web](../web/README.md) app shows the range and the [API](../api/README.md) draws
-it; both import this file through the `@shared/*` alias, so the numbers cannot drift apart.
+it; both import this file, so the numbers cannot drift apart.
 
 ## 📐 The rule
 
@@ -15,9 +15,9 @@ it; both import this file through the `@shared/*` alias, so the numbers cannot d
 
 ## ⚙️ How it's wired
 
-- **No `package.json` and no build.** It is compiled three times, by Angular's build, by Turbopack
-  and by Vitest, each through its own alias. Keep it plain TypeScript with no imports, so it stays
-  valid for all three.
+- **No `package.json` and no build.** It is compiled four times: by Angular's build (through the
+  `@shared/*` alias), and by the API's `tsc`, Vercel's function build and Vitest (through a
+  relative import). Keep it plain TypeScript with no imports, so it stays valid for all four.
 - **`MIN_AGE` and `MAX_AGE` are the single source** for the limits. The web app's messages and the
   API's error text interpolate them, so code never writes 14 or 120 as a literal. Tests do, on
   purpose: an expected value is spelled out.

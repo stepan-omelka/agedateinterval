@@ -1,6 +1,6 @@
 /**
  * The "half your age plus seven" rule. The Angular app (numbers on screen) and the
- * Next.js API (story images) both import this file, so they always agree.
+ * NestJS API (story images) both import this file, so they always agree.
  */
 
 /** Youngest age the rule works for: at 14 the range is 14–14, below that it's empty. */
