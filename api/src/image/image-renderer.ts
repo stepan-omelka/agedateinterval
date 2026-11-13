@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { readFile } from 'node:fs/promises';
 import type { ImageNode } from './image-node.js';
+import { lazy } from './lazy.js';
 import { recompressPng } from './png.js';
 
 export type ImageSize = { readonly width: number; readonly height: number };
@@ -30,10 +31,10 @@ async function loadTools() {
 @Injectable()
 export class ImageRenderer {
   /** Loaded once per process, by the first image. */
-  private tools?: ReturnType<typeof loadTools>;
+  private readonly tools = lazy(loadTools);
 
   async render(node: ImageNode, size: ImageSize): Promise<Buffer> {
-    const { satori, renderAsync, fonts } = await (this.tools ??= loadTools());
+    const { satori, renderAsync, fonts } = await this.tools();
     // Satori lays the tree out with flexbox and returns an SVG with the text as paths,
     // so resvg needs no fonts of its own to turn it into pixels, off the main thread.
     const svg = await satori(node, { ...size, fonts });
