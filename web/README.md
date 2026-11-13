@@ -2,8 +2,8 @@
 
 The Agedate frontend: an [Angular](https://angular.dev) single-page app with one screen. It works out
 the range in the browser with the [shared rule](../shared/README.md) and gets the story image from
-the [API](../api/README.md). In production it is served by the API's Next.js app; there is no server
-of its own.
+the [API](../api/README.md). In production its build is published from the API's `public/` folder;
+there is no server of its own.
 
 ## ⚙️ How it's wired
 

@@ -17,7 +17,7 @@ npm install
 # both dev servers: web on http://localhost:4400, api on http://localhost:3400
 npm run dev
 
-# production build (Angular copied into Next.js, as on Vercel), then serve it on :3400
+# production build (Angular and the images in api/public/, as on Vercel), then serve it on :3400
 npm run build
 npm start
 
