@@ -3,12 +3,9 @@ node_modules/
 
 # Build output
 dist/
-out/
-.next/
 .angular/
 *.tsbuildinfo
-next-env.d.ts
-# Angular build, copied in by api/scripts/copy-web.mjs
+# The site Vercel publishes: the Angular build and the images, written by `npm run build`
 /api/public/
 
 # Tests

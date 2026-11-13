@@ -1,7 +1,5 @@
 node_modules/
 dist/
 .angular/
-.next/
 api/public/
-api/next-env.d.ts
 package-lock.json

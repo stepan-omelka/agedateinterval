@@ -2,29 +2,44 @@
   "name": "api",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev -p 3400",
-    "build": "next build",
-    "build:site": "npm --prefix ../web run build && node scripts/copy-web.mjs && next build",
-    "start": "next start -p 3400",
+    "dev": "nest start --watch",
+    "build": "tsc --noEmit && nest build",
+    "build:site": "npm --prefix ../web run build && node scripts/copy-web.mjs && npm run build && npm run prerender",
+    "prerender": "node dist/api/src/prerender.js public",
+    "start": "node dist/api/src/main.js",
     "lint": "eslint",
     "test": "vitest run"
   },
   "dependencies": {
-    "next": "16.4.6",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "@nestjs/common": "^12.5.0",
+    "@nestjs/core": "^12.5.0",
+    "@nestjs/platform-express": "^12.5.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "satori": "^0.63.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@nestjs/cli": "^12.0.12",
+    "@nestjs/testing": "^12.5.0",
+    "@types/express": "^5.0.6",
     "@types/node": "^24.19.2",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.6",
-    "typescript": "^5",
+    "@types/supertest": "^7.2.1",
+    "eslint": "^10.14.0",
+    "supertest": "^7.3.2",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "8.71.0",
     "vitest": "^5.1.0"
   },
   "engines": {
     "node": "24.x"
+  },
+  "overrides": {
+    "satori": {
+      "fflate": "^0.7.5"
+    }
   }
 }
