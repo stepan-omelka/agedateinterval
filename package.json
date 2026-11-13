@@ -1,7 +1,8 @@
 {
   "name": "agedate",
   "private": true,
-  "description": "Agedate: Angular frontend (web/) + Next.js API (api/), sharing the dating-range rule (shared/)",
+  "description": "Agedate: Angular frontend (web/) + NestJS API (api/), sharing the dating-range rule (shared/)",
+  "type": "module",
   "scripts": {
     "prepare": "husky",
     "postinstall": "npm --prefix api install && npm --prefix web install",
