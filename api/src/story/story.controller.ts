@@ -1,6 +1,7 @@
-import { Controller, Get, Header, Param, StreamableFile } from '@nestjs/common';
+import { Controller, Get, Header, StreamableFile } from '@nestjs/common';
 import type { DatingRange } from '../../../shared/dating-range.js';
 import { DatingRangePipe } from './dating-range.pipe.js';
+import { RawAge } from './raw-age.decorator.js';
 import { StoryService } from './story.service.js';
 
 @Controller('api/story')
@@ -15,7 +16,7 @@ export class StoryController {
   @Get(':age')
   // Browsers ask again on each use, so a new deployment's image replaces the old one at once.
   @Header('Cache-Control', 'public, max-age=0, must-revalidate')
-  async image(@Param('age', DatingRangePipe) range: DatingRange): Promise<StreamableFile> {
+  async image(@RawAge(DatingRangePipe) range: DatingRange): Promise<StreamableFile> {
     return new StreamableFile(await this.stories.render(range), { type: 'image/png' });
   }
 }

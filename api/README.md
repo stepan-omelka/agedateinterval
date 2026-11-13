@@ -28,9 +28,10 @@ build in `public/`, which Vercel publishes on the same origin as the API.
   `VERCEL_PROJECT_PRODUCTION_URL`, which Vercel sets and which is unset locally.
 - **That rewrite lists the ages as a pattern**, since `vercel.json` cannot read the rule.
   [`vercel-config.test.ts`](./src/vercel-config.test.ts) fails when the two disagree.
-- **Validation**: `:age` must be a canonical whole number (`25`, not `025`) that the
-  [shared rule](../shared/README.md) gives a range. Anything else reaches the function, where the
-  pipe throws and [`ProblemDetailsFilter`](./src/problem-details.filter.ts) answers `400` in the
+- **Validation**: `:age` must be a canonical whole number (`25`, not `025`, and not `%32%35`:
+  [`RawAge`](./src/story/raw-age.decorator.ts) reads the segment before Express decodes it) that
+  the [shared rule](../shared/README.md) gives a range. Anything else reaches the function, where
+  the pipe throws and [`ProblemDetailsFilter`](./src/problem-details.filter.ts) answers `400` in the
   Problem Details format (`application/problem+json`). The same filter answers an unknown `/api/*`
   path with a `404`.
 - **Browsers revalidate** an image (`max-age=0, must-revalidate`, Vercel's default for a file), so
