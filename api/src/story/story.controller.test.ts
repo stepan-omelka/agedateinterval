@@ -58,7 +58,14 @@ describe('GET /api/story/:age', () => {
     expect((response.body as Buffer).equals(withoutHost)).toBe(true);
   });
 
-  it.each(['13', '121', '0', '025', '25.5', 'abc'])(
+  it('accepts a trailing slash', async () => {
+    const response = await getStory('25/');
+
+    expect(response.status).toBe(200);
+  });
+
+  // "%33%30" and "3%30" decode to "30": percent-encoded spellings of a valid age.
+  it.each(['13', '121', '0', '025', '25.5', 'abc', '%33%30', '3%30'])(
     'rejects %s with Problem Details',
     async age => {
       const response = await getStory(age);
